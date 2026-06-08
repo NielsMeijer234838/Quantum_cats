@@ -5,83 +5,400 @@ BIP, High performance shrodingers cat
 
 The most important concepts are:
 
-### Qubit
+Let's start completely from the beginning.
 
-Definition: Quantum bit.
+# 1. What is a qubit?
 
-Explanation: Can exist in state |0⟩, |1⟩, or a superposition of both.
+In a normal computer, a bit can be:
 
-Example: After the Hadamard gate, the qubit is in (|0⟩ + |1⟩)/√2.
+```text
+0
+or
+1
+```
 
-### Superposition
+A **qubit** can be in a combination of both states at the same time.
 
-Definition: A quantum state that combines multiple basis states.
+We write:
 
-Explanation: The system is not simply 0 or 1 before measurement.
+```text
+|0⟩
+|1⟩
+```
 
-Example: (|0⟩ + |1⟩)/√2.
+for the two possible states.
 
-### Hadamard Gate (H)
+---
 
-Definition: A quantum gate that creates superposition.
+# 2. What is a Quantum Circuit?
 
-Explanation: Transforms a definite state into an equal superposition.
+A quantum circuit is just a sequence of operations applied to qubits.
 
-Example: |0⟩ → (|0⟩ + |1⟩)/√2.
+This line creates a circuit with **2 qubits**:
 
-### Measurement
+```python
+qc = QuantumCircuit(2)
+```
 
-Definition: Reading a qubit's value.
+Initial state:
 
-Explanation: Converts the quantum state into a classical bit and causes collapse.
+```text
+qubit 0 = |0⟩
+qubit 1 = |0⟩
+```
 
-Example: Measuring the superposition gives 0 or 1.
+So:
 
-### Collapse (Kollaps)
+```text
+|00⟩
+```
 
-Definition: Reduction of a superposition to a definite outcome.
+means:
 
-Explanation: After measurement, the qubit is no longer in the original superposition.
+```text
+qubit0 = 0
+qubit1 = 0
+```
 
-Example: The measured state becomes either |0⟩ or |1⟩.
+---
 
-### Shots
+# 3. The Hadamard Gate (H)
 
-Definition: Number of repeated executions.
+```python
+qc.h(0)
+```
 
-Explanation: Quantum probabilities are estimated statistically.
+applies a Hadamard gate to qubit 0.
 
-Example: 2200 shots produce counts close to 50/50.
+Before:
 
-### Histogram
+```text
+|0⟩
+```
 
-Definition: Bar chart of measurement frequencies.
+After:
 
-Explanation: Helps visualize the probability distribution.
+```text
+(|0⟩ + |1⟩)/√2
+```
 
-Example: Two bars of roughly equal height for 0 and 1.
+Meaning:
 
-### The absolute principle behind this program
+```text
+50% chance of measuring 0
+50% chance of measuring 1
+```
 
-Quantum computing works with probability amplitudes instead of fixed classical values. The Hadamard gate creates a superposition. Measurement converts that quantum state into a classical result. By repeating the experiment many times (shots), we estimate the probabilities of the outcomes.
+Visual idea:
 
-In this specific circuit, the theory predicts approximately:
+```text
+Before H:
 
-| Outcome | Probability |
-| ------- | ----------- |
-| 0       | 50%         |
-| 1       | 50%         |
+100% 0
 
-So the histogram should show two bars of roughly equal height.
+After H:
 
-###
+50% 0
+50% 1
+```
 
-1. Start with a qubit in |0⟩.
+So after:
 
-2. Apply H → create superposition.
+```python
+qc.h(0)
+```
 
-3. Measure → collapse to 0 or 1.
+the first qubit is random.
 
-4. Repeat many times → observe the statistical distribution.
+Current state:
 
-This is the foundation of almost all quantum information experiments. Entanglement, teleportation, quantum cryptography, and quantum algorithms all build on these same ideas.
+```text
+(|00⟩ + |10⟩)/√2
+```
+
+---
+
+# 4. The CNOT Gate (CX)
+
+```python
+qc.cx(0, 1)
+```
+
+means:
+
+```text
+Control = qubit 0
+Target  = qubit 1
+```
+
+Rule:
+
+```text
+If control = 1
+    flip target
+```
+
+Examples:
+
+```text
+00 → 00
+01 → 01
+10 → 11
+11 → 10
+```
+
+---
+
+## Apply it to our state
+
+Before CNOT:
+
+```text
+(|00⟩ + |10⟩)/√2
+```
+
+Apply CNOT:
+
+```text
+|00⟩ stays |00⟩
+|10⟩ becomes |11⟩
+```
+
+Result:
+
+```text
+(|00⟩ + |11⟩)/√2
+```
+
+This is called an **entangled state**.
+
+---
+
+# 5. What is Entanglement?
+
+The qubits are now connected.
+
+If you measure:
+
+```text
+qubit0 = 0
+```
+
+you automatically know:
+
+```text
+qubit1 = 0
+```
+
+If you measure:
+
+```text
+qubit0 = 1
+```
+
+then:
+
+```text
+qubit1 = 1
+```
+
+Possible outcomes:
+
+```text
+00
+11
+```
+
+Impossible outcomes:
+
+```text
+01
+10
+```
+
+---
+
+# 6. Measurement
+
+```python
+qc.measure_all()
+```
+
+Measurement converts quantum information into classical bits.
+
+Before measurement:
+
+```text
+(|00⟩ + |11⟩)/√2
+```
+
+After measurement:
+
+```text
+50% → 00
+50% → 11
+```
+
+---
+
+# 7. The Sampler
+
+```python
+sampler = StatevectorSampler()
+```
+
+The sampler runs the circuit many times.
+
+One run gives only:
+
+```text
+00
+```
+
+or
+
+```text
+11
+```
+
+So we run it thousands of times.
+
+---
+
+# 8. Running 2200 shots
+
+```python
+result = sampler.run([qc], shots=2200).result()
+```
+
+Here:
+
+```python
+shots=2200
+```
+
+means:
+
+> Repeat the experiment 2200 times.
+
+Example:
+
+```text
+Run 1: 00
+Run 2: 11
+Run 3: 00
+Run 4: 11
+...
+```
+
+---
+
+# 9. Counting Results
+
+```python
+counts = result[0].data.meas.get_counts()
+```
+
+Possible output:
+
+```python
+{
+    '00': 1098,
+    '11': 1102
+}
+```
+
+Meaning:
+
+```text
+00 appeared 1098 times
+11 appeared 1102 times
+```
+
+which is approximately:
+
+```text
+50%
+50%
+```
+
+---
+
+# 10. Printing
+
+```python
+print(counts)
+```
+
+Output:
+
+```python
+{'00': 1098, '11': 1102}
+```
+
+---
+
+# 11. Histogram
+
+```python
+plot_histogram(counts)
+```
+
+draws a graph.
+
+Something like:
+
+```text
+1100 |
+     |        ████
+1000 |        ████
+     |        ████
+ 500 |
+     |
+   0 +----------------
+       00      11
+```
+
+Because only:
+
+```text
+00
+11
+```
+
+can occur.
+
+---
+
+# Complete Story
+
+Initial state:
+
+```text
+|00⟩
+```
+
+After H:
+
+```text
+(|00⟩ + |10⟩)/√2
+```
+
+After CNOT:
+
+```text
+(|00⟩ + |11⟩)/√2
+```
+
+After Measurement:
+
+```text
+50% → 00
+50% → 11
+```
+
+This is actually one of the most famous quantum circuits because it creates a **Bell State**, specifically:
+
+\frac{|00\rangle+|11\rangle}{\sqrt{2}}
+
+and is often the first example used to demonstrate **superposition**, **entanglement**, and **quantum randomness**.
