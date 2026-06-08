@@ -74,9 +74,7 @@ In this specific circuit, the theory predicts approximately:
 
 So the histogram should show two bars of roughly equal height.
 
-### Mental model
-
-![Qubits Explained: The Building Blocks of Quantum Computing | by Priya N | Medium](https://images.openai.com/static-rsc-4/8sVzA2vff2_r0xpIo52_Sz8BrSuy1tg05TzZFnq2Qokn9tZWF86IBSqNFujgRVn2lqSQv9oxO6Paq4A1fPuYWQ3xbALohB8IXnya7oGEpYLEyiee9Zvl9one8V7HxFm2vgm90l-j0WNmjvhzZaOam2Kd7MVw6Pz3Yh7f-9B5RELfGTyOgT0iQo9z7NAqCJjT?purpose=fullsize)
+###
 
 1. Start with a qubit in |0⟩.
 
