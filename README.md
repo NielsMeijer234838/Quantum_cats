@@ -1,11 +1,9 @@
 # Quantum_cats
 BIP, High performance shrodingers cat
 
-Here is the same program with much more detailed comments that explain the basic principles (Prinzipien) and the Fachbegriffe used in quantum computing.
-
 ### Annotated beginner version
 
-The most important concepts in this example are:
+The most important concepts are:
 
 ### Qubit
 
