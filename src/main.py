@@ -21,10 +21,13 @@ result = sampler.run([qc], shots=2200).result()
 
 # Extract the counts from the result.
 counts = result[0].data.meas.get_counts()
+print()
 print("Measurement counts:", counts)
+print()
 
 # Plot a histogram of the measured results.
 # This helps beginners see the distribution visually.
 hist = plot_histogram(counts)
 hist.savefig("measurement_histogram.png")
 print("Histogram saved to measurement_histogram.png")
+print()

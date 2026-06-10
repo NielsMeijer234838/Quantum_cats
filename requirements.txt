@@ -1,4 +1,5 @@
 qiskit
+matplotlib
 
 anyio==4.13.0
 appnope==0.1.4
