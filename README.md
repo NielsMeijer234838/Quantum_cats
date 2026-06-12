@@ -3,7 +3,7 @@
 BIP, High performance shrodingers cat
 
 link to the ultra-gambler repo: https://github.com/iamkredig/ultra-gambler
-the quantum branch is: https://github.com/iamkredig/ultra-gambler/tree/py-test
+the quantum branch is: https://github.com/iamkredig/ultra-gambler/tree/py-test. the quantum branch require python installed on the pc. Please make sure to have python and quiskit installed, as well as adjusted the path to python in the cmake
 
 ### Annotated beginner version
 
