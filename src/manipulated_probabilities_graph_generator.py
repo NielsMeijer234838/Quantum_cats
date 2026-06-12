@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 qc = QuantumCircuit(2)
-qc.ry(0.9273, 1)
-qc.cry(1.3181, control_qubit=1, target_qubit=0)
+qc.ry(0.7754, 1)
+qc.cry(1.4706, control_qubit=1, target_qubit=0)
 qc.x(1)
-qc.cry(1.3181, control_qubit=1, target_qubit=0)
+qc.cry(1.0472, control_qubit=1, target_qubit=0)
 qc.x(1)
 qc.measure_all()
 
